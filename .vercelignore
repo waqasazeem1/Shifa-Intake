@@ -1,0 +1,10 @@
+cloudflared.exe
+run_tunnel.bat
+.env
+.venv
+venv/
+__pycache__/
+*.pyc
+eval.py
+data/cases.json
+.git

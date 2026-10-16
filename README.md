@@ -1,7 +1,7 @@
 # Shifa Intake (AMD Developer Hackathon: ACT III, Health and Wellbeing)
 
-> 🚀 **Live Demo URL:** [https://substantially-marks-hat-iowa.trycloudflare.com](https://substantially-marks-hat-iowa.trycloudflare.com)  
-> 📊 **Interactive Pitch Slides:** [https://substantially-marks-hat-iowa.trycloudflare.com/static/presentation.html](https://substantially-marks-hat-iowa.trycloudflare.com/static/presentation.html)
+> 🚀 **24/7 Cloud Demo:** Ready to deploy with 1-click on **Vercel**, **Render**, or **Replit**.  
+> 📊 **Interactive Pitch Slides:** Available at `/presentation` (or `/static/presentation.html`).
 
 Patient intake and multilingual (Urdu / Roman Urdu / English) communication assistant for clinic staff.
 It never diagnoses or advises treatment. Every output is reviewed by a human before it reaches the patient.
@@ -31,3 +31,9 @@ uvicorn app.main:app --reload
 python eval.py         # field accuracy on 6 synthetic cases
 ```
 Docker: `docker build -t shifa . && docker run -p 8000:8000 --env-file .env shifa`
+
+## 24/7 Cloud Deployment (Fast & Free)
+This repository is pre-configured for instant 1-click deployment on 24/7 cloud hosts:
+- **Vercel** (`vercel.json` & `api/index.py`): Import repository `waqasazeem1/Shifa-Intake` into Vercel and click **Deploy**.
+- **Render** (`render.yaml`): Connect repo on [render.com](https://render.com) for a 24/7 web service with persistent execution.
+- **Replit** (`.replit`): Import repository into Replit and press **Run**.

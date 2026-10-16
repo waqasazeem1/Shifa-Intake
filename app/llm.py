@@ -11,7 +11,7 @@ load_dotenv()
 def __getattr__(name: str):
     if name == "MOCK":
         load_dotenv(override=True)
-        return os.getenv("MOCK_LLM") == "1"
+        return os.getenv("MOCK_LLM") == "1" or not bool(os.getenv("LLM_BASE_URL") and os.getenv("LLM_API_KEY"))
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
