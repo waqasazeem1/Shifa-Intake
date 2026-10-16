@@ -17,6 +17,7 @@ It never diagnoses or advises treatment. Every output is reviewed by a human bef
 - Synthetic data only. Do not enter real patient data.
 
 ## AMD
+https://notebooks.amd.com/tokenfactory
 The LLM runs on AMD infrastructure through an OpenAI-compatible endpoint (AMD tokenfactory or vLLM on AMD Developer Cloud with ROCm). Set `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL`.
 
 ## Run
