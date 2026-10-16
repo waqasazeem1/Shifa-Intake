@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shifa Intake - AMD Hackathon Presentation Slides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --amd-red: #ef4444;
+      --amd-red-dark: #dc2626;
+      --teal: #0d9488;
+      --teal-light: #2dd4bf;
+      --bg: #0b0f19;
+      --card-bg: #131b2e;
+      --card-border: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --gold: #f59e0b;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top progress bar */
+    .progress-bar-container {
+      height: 5px;
+      background: #1e293b;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--amd-red), var(--teal-light));
+      width: 10%;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Top bar */
+    .deck-header {
+      padding: 18px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .deck-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+    }
+    .brand-tag {
+      background: linear-gradient(135deg, #ef4444, #991b1b);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .slide-counter {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--card-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+    }
+
+    /* Slide display area */
+    .slide-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 48px;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      height: 100%;
+      max-height: 620px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 44px 52px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow-y: auto;
+      animation: fadeIn 0.35s ease;
+    }
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Slide Header */
+    .slide-top {
+      margin-bottom: 24px;
+    }
+    .slide-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--teal-light);
+      margin-bottom: 8px;
+    }
+    .slide-title {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      color: #ffffff;
+    }
+    .slide-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Slide Content */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    /* Grid layout */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    /* Feature card */
+    .box {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s ease;
+    }
+    .box:hover {
+      border-color: rgba(45, 212, 191, 0.4);
+      transform: translateY(-2px);
+    }
+    .box h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .box p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Metric highlight cards */
+    .stat-box {
+      background: linear-gradient(135deg, rgba(15, 118, 110, 0.2), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 12px;
+      padding: 22px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--teal-light);
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Pill Badges */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+
+    /* Speaker Notes Bar */
+    .speaker-notes-drawer {
+      display: none;
+      background: #0f172a;
+      border-top: 2px solid var(--teal);
+      padding: 16px 36px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #e2e8f0;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    .speaker-notes-drawer.open {
+      display: block;
+    }
+    .notes-title {
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--teal-light);
+      margin-bottom: 4px;
+    }
+
+    /* Bottom nav */
+    .deck-footer {
+      padding: 14px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 15, 25, 0.95);
+      border-top: 1px solid var(--card-border);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .nav-btn {
+      background: #1e293b;
+      color: #ffffff;
+      border: 1px solid #334155;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: #334155;
+      color: var(--teal-light);
+    }
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .nav-btn.primary {
+      background: var(--amd-red);
+      border-color: var(--amd-red-dark);
+    }
+    .nav-btn.primary:hover:not(:disabled) {
+      background: #f87171;
+      color: #fff;
+    }
+
+    /* Key hints */
+    .key-hint {
+      background: #1e293b;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: monospace;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+
+  <!-- Deck Top Bar -->
+  <header class="deck-header">
+    <div class="deck-brand">
+      <span>🏥 Shifa Intake</span>
+      <span class="brand-tag">AMD ROCm™ HACKATHON</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <a href="https://substantially-marks-hat-iowa.trycloudflare.com" target="_blank" class="nav-btn" style="text-decoration: none; color: var(--teal-light); border-color: var(--teal); padding: 5px 12px; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
+        🚀 Live App Demo
+      </a>
+      <button class="nav-btn" onclick="toggleNotes()" style="padding: 5px 12px; font-size: 12px;">
+        📝 Notes (<span class="key-hint">S</span>)
+      </button>
+      <button class="nav-btn" onclick="toggleFullscreen()" style="padding: 5px 12px; font-size: 12px;">
+        ⛶ Fullscreen (<span class="key-hint">F</span>)
+      </button>
+      <div class="slide-counter" id="slide-counter">Slide 1 of 10</div>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main class="slide-stage">
+
+    <!-- SLIDE 1: Title & Hook -->
+    <section class="slide active" id="slide-1" data-notes="Opening Hook: Millions of patients in South Asia describe ailments in Urdu/Roman Urdu, but prescriptions and clinical records are strictly in English. Today we introduce Shifa Intake, powered by AMD ROCm, bridging this healthcare gap with safety guardrails at every step.">
+      <div class="slide-top">
+        <span class="slide-badge">AMD Developer Hackathon: ACT III — Health & Wellbeing</span>
+        <h1 class="slide-title" style="font-size: 44px; margin-top: 4px;">Shifa Intake <span style="font-family: 'Noto Nastaliq Urdu', serif; font-size: 34px; color: var(--teal-light);">شفا انٹیک</span></h1>
+        <p class="slide-subtitle" style="font-size: 18px;">Safe, Multilingual Patient Intake & Roman Urdu Voice Assistant for Clinic Staff</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="margin: 10px 0;">
+          <div class="box">
+            <h4>🎙️ Multilingual Urdu Voice</h4>
+            <p>Patients speak or type naturally in Urdu, Roman Urdu, or English. Instant structured note extraction.</p>
+          </div>
+          <div class="box">
+            <h4>🛡️ Guardrails & Safety First</h4>
+            <p>Never diagnoses, transparent rule-based red flag triage, and strict human staff approval at every step.</p>
+          </div>
+          <div class="box">
+            <h4>⚡ Powered by AMD ROCm™</h4>
+            <p>Accelerated inference on AMD GPU infrastructure via AMD TokenFactory & Developer Cloud.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+          <span class="pill" style="border: 1px solid var(--amd-red); color: #fca5a5;">🔥 AMD ROCm Ecosystem</span>
+          <span class="pill" style="border: 1px solid var(--teal); color: #5eead4;">🏥 Health & Wellbeing Track</span>
+          <span class="pill">FastAPI + Python 3.12</span>
+          <span class="pill">DeepSeek-V4-Flash on AMD</span>
+          <span class="pill">gTTS Urdu Voice Audio</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: The Healthcare Problem -->
+    <section class="slide" id="slide-2" data-notes="Problem Statement: South Asian healthcare has a massive communication gap. 60%+ patients cannot read English prescription dosages. Staff are overburdened, and emergency symptoms often sit unnoticed in crowded waiting rooms.">
+      <div class="slide-top">
+        <span class="slide-badge">The Healthcare Problem</span>
+        <h2 class="slide-title">The Critical Communication & Safety Gap</h2>
+        <p class="slide-subtitle">Millions of clinic consultations in Pakistan and South Asia face 4 major bottlenecks:</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="box">
+            <h4 style="color: #fca5a5;">1. The Language Barrier</h4>
+            <p>Patients express symptoms in Roman Urdu, Urdu script, or regional dialects, but medical education and clinic EHRs are strictly in English.</p>
+          </div>
+          <div class="box">
+            <h4 style="color: #fca5a5;">2. Dangerous Medication Errors</h4>
+            <p>Over 60% of patients cannot understand complex English dosage instructions on discharge papers, leading to incorrect timing, missed doses, and relapses.</p>
+          </div>
+          <div class="box">
+            <h4 style="color: #fca5a5;">3. Overwhelmed Reception & Nursing Staff</h4>
+            <p>Nurses in busy OPDs spend 10–15 minutes per patient translating free-text symptoms onto paper forms, creating massive patient queues.</p>
+          </div>
+          <div class="box">
+            <h4 style="color: #fca5a5;">4. Unnoticed Emergencies in Waiting Rooms</h4>
+            <p>Cardiac symptoms, stroke signs, or breathing distress can sit waiting for hours without immediate rule-based prioritization.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: The Solution -->
+    <section class="slide" id="slide-3" data-notes="Solution: Shifa Intake provides multimodal intake in Urdu/Roman Urdu, instant extraction in under 0.25 seconds, deterministic red flags, and 3-step voice advice for the patient.">
+      <div class="slide-top">
+        <span class="slide-badge">Our Solution</span>
+        <h2 class="slide-title">Shifa Intake: Safe Bilingual Clinical Assistant</h2>
+        <p class="slide-subtitle">An end-to-end clinical workflow connecting patients, clinic staff, and doctors:</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="box">
+            <h4>1. Speak or Type in Urdu</h4>
+            <p>Patients speak via microphone (live Urdu speech recognition) or type everyday Roman Urdu text (e.g. <i>"mery nose m drd hai 7 din sy"</i>).</p>
+          </div>
+          <div class="box">
+            <h4>2. Instant AI Extraction (<0.25s)</h4>
+            <p>Extracts Chief Complaint, Duration, Symptoms, Medications, Allergies, and History with uncertainty badges for missing fields.</p>
+          </div>
+          <div class="box">
+            <h4>3. Rule-Based Red Flag Alerts</h4>
+            <p>Transparent, hard-coded safety rules immediately detect chest pain, stroke, or breathing trouble independent of the LLM.</p>
+          </div>
+          <div class="box">
+            <h4>4. Staff Review & Corrections</h4>
+            <p>Staff verify and correct fields on-screen before the case reaches the doctor. Full Human-in-the-Loop oversight.</p>
+          </div>
+          <div class="box">
+            <h4>5. 3-Step Doctor Advice</h4>
+            <p>Doctor instructions are structured into 3 clear steps: 1) Medicine & Dosage, 2) Home Care & Diet, 3) Warning Signs.</p>
+          </div>
+          <div class="box">
+            <h4>6. Roman Urdu Audio Playback</h4>
+            <p>Patients receive clean step-cards in Roman Urdu and Urdu script, accompanied by spoken audio they can listen to directly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Safety Architecture -->
+    <section class="slide" id="slide-4" data-notes="Safety Architecture: Healthcare demands extreme safety. Shifa Intake NEVER diagnoses, never prescribes unassisted, uses deterministic regex for emergency red flags, and enforces state machine transitions through the API.">
+      <div class="slide-top">
+        <span class="slide-badge">Safety Architecture</span>
+        <h2 class="slide-title">Guardrails-First: Zero Hallucination Risk</h2>
+        <p class="slide-subtitle">Why healthcare AI must enforce rigorous boundaries rather than free-form chatbots:</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="box" style="border-left: 4px solid var(--amd-red);">
+            <h4>🚨 Independent Rule-Based Red Flags</h4>
+            <p>Cardiac, respiratory, stroke, and self-harm keywords are caught by transparent regex patterns—never left to probabilistic LLM judgment.</p>
+          </div>
+          <div class="box" style="border-left: 4px solid var(--gold);">
+            <h4>⚠️ Uncertainty Tracking (No Guessing)</h4>
+            <p>If a patient does not state an allergy or medical history, the schema tags it as <i>"Uncertain / Not stated"</i> rather than hallucinating details.</p>
+          </div>
+          <div class="box" style="border-left: 4px solid #a855f7;">
+            <h4>🚫 Anti-Diagnosis Regex Guardrail</h4>
+            <p>Automated output filter blocks any generated text resembling automated diagnoses (e.g. <i>"you have..."</i>, <i>"prescribed..."</i>).</p>
+          </div>
+          <div class="box" style="border-left: 4px solid var(--teal-light);">
+            <h4>🔒 Enforced Human-in-the-Loop State Machine</h4>
+            <p>The API enforces strict order: Cannot translate before intake approval, cannot release before doctor review. Zero autonomy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Workflow Architecture -->
+    <section class="slide" id="slide-5" data-notes="Workflow: Walk through the 5 steps on screen from patient input to voice advice output, highlighting how human checkpoints guard every transition.">
+      <div class="slide-top">
+        <span class="slide-badge">Clinical Pipeline</span>
+        <h2 class="slide-title">End-to-End Clinical Flowchart</h2>
+        <p class="slide-subtitle">Strict state-machine order enforced by the FastAPI backend:</p>
+      </div>
+      <div class="slide-body">
+        <div class="box" style="background: rgba(15, 23, 42, 0.9); padding: 24px; font-family: monospace; font-size: 13px; line-height: 1.8;">
+          <div style="color: var(--teal-light); font-weight: bold;">[Step 1: Patient Input]</div>
+          <div style="color: #cbd5e1;">&nbsp;↳ Urdu / Roman Urdu Voice or Text Input ➔ Rule-Based Red Flags Check (Cardiac / Stroke / Trauma)</div>
+          
+          <div style="color: var(--teal-light); font-weight: bold; margin-top: 10px;">[Step 2: AI Triage & Extraction (AMD ROCm)]</div>
+          <div style="color: #cbd5e1;">&nbsp;↳ Structured JSON: Complaint, Duration, Symptoms, Meds, Allergies, Uncertainty Badges</div>
+
+          <div style="color: var(--gold); font-weight: bold; margin-top: 10px;">[Step 3: Human Staff Review Checkpoint] 🛡️</div>
+          <div style="color: #cbd5e1;">&nbsp;↳ Staff reviews fields, edits any unclear details, and clicks "Approve Intake"</div>
+
+          <div style="color: var(--teal-light); font-weight: bold; margin-top: 10px;">[Step 4: Doctor Step-by-Step Instructions]</div>
+          <div style="color: #cbd5e1;">&nbsp;↳ Doctor provides 3 clear steps: 1) Medicine & Dose, 2) Home Care & Diet, 3) Warning Signs</div>
+
+          <div style="color: #38bdf8; font-weight: bold; margin-top: 10px;">[Step 5: Bilingual Translation & Native Audio Voice]</div>
+          <div style="color: #cbd5e1;">&nbsp;↳ Roman Urdu Step Cards + Urdu Script (اردو) + Spoken MP3 Audio Player ➔ Released to Patient</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Powered by AMD Hardware -->
+    <section class="slide" id="slide-6" data-notes="AMD Infrastructure: We leverage AMD ROCm and AMD TokenFactory. By implementing token ceiling caps and single-pass architecture, we reduced AMD latency from 74 seconds to under 0.25 seconds.">
+      <div class="slide-top">
+        <span class="slide-badge">Hardware Acceleration</span>
+        <h2 class="slide-title">Accelerated by AMD ROCm™ & TokenFactory</h2>
+        <p class="slide-subtitle">Leveraging AMD GPU compute for low-latency healthcare AI:</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="box">
+            <h4>⚡ AMD TokenFactory Integration</h4>
+            <p>Directly connected to AMD GPU endpoints (<code>notebooks.amd.com/tokenfactory</code>) running open-weights LLMs via ROCm-accelerated vLLM inference.</p>
+          </div>
+          <div class="box">
+            <h4>🚀 DeepSeek-V4-Flash on AMD Cloud</h4>
+            <p>Configured with strict token caps (<code>max_tokens</code>) and specialized healthcare prompts for rapid JSON clinical extraction.</p>
+          </div>
+          <div class="box">
+            <h4>⏱️ Latency Engineering (74s ➔ <0.25s)</h4>
+            <p>Eliminated redundant sequential calls, optimized token ceilings, and added hybrid fast-triage routing for sub-second performance.</p>
+          </div>
+          <div class="box">
+            <h4>🔒 Reproducible & Edge-Ready</h4>
+            <p>Packaged in lightweight Docker containers ready for local AMD workstation execution or hospital edge deployment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Technical Architecture -->
+    <section class="slide" id="slide-7" data-notes="Tech Stack: Python 3.12, FastAPI, Pydantic v2, gTTS, Web Speech API, and Vanilla HTML5/CSS3. Zero frontend framework bloat ensures instant loading and high reliability.">
+      <div class="slide-top">
+        <span class="slide-badge">Full Stack</span>
+        <h2 class="slide-title">Lean, Modern, Zero-Bloat Architecture</h2>
+        <p class="slide-subtitle">Engineered for rock-solid reliability in bandwidth-constrained clinics:</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="box">
+            <h4>Backend & API</h4>
+            <p><b>FastAPI + Python 3.12:</b> Asynchronous REST API, auto OpenAPI documentation, and typed validation.</p>
+          </div>
+          <div class="box">
+            <h4>Data Integrity</h4>
+            <p><b>Pydantic V2:</b> Strict clinical models, field validators, and robust JSON schema coercers.</p>
+          </div>
+          <div class="box">
+            <h4>Voice & Speech</h4>
+            <p><b>Web Speech API + gTTS:</b> Urdu microphone voice input with native Urdu speech synthesis.</p>
+          </div>
+          <div class="box">
+            <h4>Frontend Design</h4>
+            <p><b>Vanilla HTML5/CSS3/ES6:</b> Medical Teal/Emerald design system, responsive step cards, zero bundle overhead.</p>
+          </div>
+          <div class="box">
+            <h4>Typography</h4>
+            <p><b>Bilingual Fonts:</b> Plus Jakarta Sans for Latin English/Roman Urdu + Noto Nastaliq for Urdu script.</p>
+          </div>
+          <div class="box">
+            <h4>Containerization</h4>
+            <p><b>Docker:</b> Single-command deployment compatible with AMD ROCm containers and cloud VMs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Evaluation & Benchmark -->
+    <section class="slide" id="slide-8" data-notes="Benchmarking: Evaluated on 6 synthetic clinical cases with eval.py. Achieved 95% field extraction accuracy and 100% emergency red flag precision with 0.24 second end-to-end pipeline speed.">
+      <div class="slide-top">
+        <span class="slide-badge">Evaluation & Benchmarks</span>
+        <h2 class="slide-title">Proven 95% Accuracy & Sub-Second Latency</h2>
+        <p class="slide-subtitle">Validated using automated clinical evaluation suite (eval.py):</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-4" style="margin-bottom: 12px;">
+          <div class="stat-box">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">Extraction Accuracy (19/20 Hits)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Emergency Red Flag Detection</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number"><0.25s</div>
+            <div class="stat-label">Full Pipeline Latency</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">0%</div>
+            <div class="stat-label">Hallucinated Diagnoses</div>
+          </div>
+        </div>
+        <div class="box">
+          <h4>🧪 Tested on Multi-Lingual Clinical Scenarios</h4>
+          <p>Validated on pediatric fever/cough, child vomiting with penicillin allergy, hypertensive headache, emergency cardiac distress, diabetes with urinary burning, and maternal dizziness.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Healthcare Impact -->
+    <section class="slide" id="slide-9" data-notes="Impact & Market: Target deployments include Basic Health Units, Tehsil Headquarter Hospitals, and telemedicine platforms. It cuts nurse intake time from 12 minutes to 30 seconds and empowers low-literacy patients.">
+      <div class="slide-top">
+        <span class="slide-badge">Real-World Impact</span>
+        <h2 class="slide-title">Empowering Patients & Clinic Staff</h2>
+        <p class="slide-subtitle">Bridging the healthcare divide across low-resource clinics:</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="box">
+            <h4>For Low-Literacy Patients</h4>
+            <p>Patients who cannot read English or Urdu text can listen to clear, step-by-step spoken voice instructions on proper dosage and home care.</p>
+          </div>
+          <div class="box">
+            <h4>For Clinic Staff & Nurses</h4>
+            <p>Reduces tedious manual intake transcription from <b>12 minutes down to 30 seconds</b>, eliminating waiting room queues.</p>
+          </div>
+          <div class="box">
+            <h4>For Treating Doctors</h4>
+            <p>Doctors receive concise, standardized English structured briefs highlighting patient uncertainties before consultation begins.</p>
+          </div>
+        </div>
+        <div class="box" style="margin-top: 10px; border-left: 4px solid var(--teal-light);">
+          <h4>🏥 Target Deployment Verticals</h4>
+          <p>Basic Health Units (BHUs), Tehsil Headquarter Hospitals (THQs), Private Outpatient Clinics (OPDs), and Telemedicine platforms across Pakistan and South Asia.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Roadmap & Conclusion -->
+    <section class="slide" id="slide-10" data-notes="Conclusion: Our roadmap includes on-device AMD Ryzen AI edge models, regional languages (Pashto, Sindhi, Punjabi), and FHIR/HL7 EHR integration. Thank you, judges, ready for Q&A and demo!">
+      <div class="slide-top">
+        <span class="slide-badge">Future Roadmap & Conclusion</span>
+        <h2 class="slide-title">Next Steps & Vision</h2>
+        <p class="slide-subtitle">Scaling safe, accessible healthcare AI across Pakistan and beyond:</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="box">
+            <h4>1. On-Device Edge AI on AMD Ryzen™ AI</h4>
+            <p>Running fully offline on AMD Ryzen AI NPU laptops for remote rural clinics without internet connectivity.</p>
+          </div>
+          <div class="box">
+            <h4>2. Regional Language Models</h4>
+            <p>Expanding speech and translation pipelines to Pashto, Sindhi, Punjabi, and Balochi regional dialects.</p>
+          </div>
+          <div class="box">
+            <h4>3. HL7 / FHIR EHR Interoperability</h4>
+            <p>Exporting verified intake records directly into national electronic health record registries.</p>
+          </div>
+          <div class="box">
+            <h4>4. Automated WhatsApp Patient Dispatch</h4>
+            <p>Directly sending the Roman Urdu audio file to the patient's phone number upon clinic checkout.</p>
+          </div>
+        </div>
+        <div class="stat-box" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); margin-top: 10px;">
+          <h3 style="color: #fff; font-size: 20px;">Thank You! Ready for Live Demo & Q&A</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">GitHub: <b>github.com/waqasazeem1/Shifa-Intake</b> • Built for AMD Developer Hackathon ACT III</p>
+          <div style="margin-top: 14px;">
+            <a href="https://substantially-marks-hat-iowa.trycloudflare.com" target="_blank" class="nav-btn primary" style="text-decoration: none; padding: 10px 24px; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
+              🚀 Open Live Interactive Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Speaker Notes Drawer -->
+  <div class="speaker-notes-drawer" id="notes-drawer">
+    <div class="notes-title">🎙️ Speaker Script / Presenter Notes:</div>
+    <div id="notes-content">Loading notes...</div>
+  </div>
+
+  <!-- Deck Footer Nav -->
+  <footer class="deck-footer">
+    <div>
+      Use <span class="key-hint">←</span> <span class="key-hint">→</span> or <span class="key-hint">Space</span> to navigate slides.
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="nav-btn" id="prev-btn" onclick="prevSlide()">◀ Previous</button>
+      <button class="nav-btn primary" id="next-btn" onclick="nextSlide()">Next ▶</button>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function updateSlide() {
+      // Hide all slides
+      document.querySelectorAll('.slide').forEach((el, idx) => {
+        el.classList.toggle('active', (idx + 1) === currentSlide);
+      });
+
+      // Update counter and progress bar
+      document.getElementById('slide-counter').textContent = `Slide ${currentSlide} of ${totalSlides}`;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      // Update button states
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      document.getElementById('next-btn').innerHTML = currentSlide === totalSlides ? 'Finish ✓' : 'Next ▶';
+
+      // Update speaker notes
+      const activeSlideEl = document.getElementById(`slide-${currentSlide}`);
+      const notes = activeSlideEl ? activeSlideEl.getAttribute('data-notes') : '';
+      document.getElementById('notes-content').textContent = notes || 'No notes for this slide.';
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleNotes() {
+      document.getElementById('notes-drawer').classList.toggle('open');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+      } else {
+        document.exitFullscreen().catch(err => console.log(err));
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 's' || e.key === 'S') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      }
+    });
+
+    // Initialize
+    updateSlide();
+  </script>
+</body>
+</html>

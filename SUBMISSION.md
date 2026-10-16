@@ -15,4 +15,6 @@ We tested field extraction on 6 synthetic cases (accuracy printed by eval.py). A
 
 **Tags:** AMD, ROCm, LLM, healthcare, multilingual, FastAPI, human-in-the-loop
 
+**Demo URL:** https://substantially-marks-hat-iowa.trycloudflare.com
+
 **Who uses it:** clinic reception/nursing staff and doctors.

@@ -1,5 +1,8 @@
 # Shifa Intake (AMD Developer Hackathon: ACT III, Health and Wellbeing)
 
+> 🚀 **Live Demo URL:** [https://substantially-marks-hat-iowa.trycloudflare.com](https://substantially-marks-hat-iowa.trycloudflare.com)  
+> 📊 **Interactive Pitch Slides:** [https://substantially-marks-hat-iowa.trycloudflare.com/static/presentation.html](https://substantially-marks-hat-iowa.trycloudflare.com/static/presentation.html)
+
 Patient intake and multilingual (Urdu / Roman Urdu / English) communication assistant for clinic staff.
 It never diagnoses or advises treatment. Every output is reviewed by a human before it reaches the patient.
 
