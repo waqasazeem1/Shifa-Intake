@@ -1,7 +1,7 @@
 # Shifa Intake (AMD Developer Hackathon: ACT III, Health and Wellbeing)
 
-> 🚀 **24/7 Cloud Demo:** Ready to deploy with 1-click on **Vercel**, **Render**, or **Replit**.  
-> 📊 **Interactive Pitch Slides:** Available at `/presentation` (or `/static/presentation.html`).
+> 🚀 **24/7 Live Cloud Demo:** [https://shifa-intake.vercel.app](https://shifa-intake.vercel.app)  
+> 📊 **Interactive Pitch Slides:** [https://shifa-intake.vercel.app/presentation](https://shifa-intake.vercel.app/presentation)
 
 Patient intake and multilingual (Urdu / Roman Urdu / English) communication assistant for clinic staff.
 It never diagnoses or advises treatment. Every output is reviewed by a human before it reaches the patient.
