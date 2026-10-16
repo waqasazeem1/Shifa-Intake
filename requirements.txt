@@ -1,0 +1,5 @@
+fastapi[standard]
+openai>=1.40
+pydantic>=2
+python-dotenv
+gtts>=2.5

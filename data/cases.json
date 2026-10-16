@@ -1,0 +1,8 @@
+[
+ {"text":"Mujhe 3 din se bukhar aur khansi hai, paracetamol le raha hoon.","expect":{"duration":"3","symptoms":["fever","cough"],"medications":["paracetamol"]}},
+ {"text":"Meri 5 saal ki beti ko 2 din se pait dard aur ulti hai. Koi dawai nahi di. Penicillin se allergy hai.","expect":{"duration":"2","symptoms":["stomach","vomit"],"allergies":["penicillin"]}},
+ {"text":"I have had a headache for a week. I take ibuprofen sometimes. No allergies. I have high blood pressure.","expect":{"duration":"week","symptoms":["headache"],"medications":["ibuprofen"],"history":["blood pressure"]}},
+ {"text":"Mujhe seene mein dard hai aur saans lene mein takleef hai, subah se.","expect":{"symptoms":["chest","breath"]},"expect_flags":true},
+ {"text":"Peshab mein jalan hai 4 din se, aur kamar mein dard. Sugar ki dawai metformin leta hoon.","expect":{"duration":"4","medications":["metformin"],"history":["sugar"]}},
+ {"text":"Meri maa ko chakkar aate hain, 1 hafta se. Wo BP ki goli leti hain, naam yaad nahi.","expect":{"duration":"week","symptoms":["dizz"]}}
+]

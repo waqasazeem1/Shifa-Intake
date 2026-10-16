@@ -1,0 +1,11 @@
+.env
+.env.local
+__pycache__/
+*.py[cod]
+*$py.class
+*.webm
+*.mp3
+venv/
+.venv/
+.vscode/
+.idea/
